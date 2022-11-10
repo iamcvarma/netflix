@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import MuiModal from "@mui/material/Modal";
 import { useRecoilState } from "recoil";
-import { modalState, movieState } from "../atoms/modalAtom";
+import { modalState, movieState, movieList } from "../atoms/modalAtom";
 import { IoCloseSharp } from "react-icons/io5";
 import { Element, Genre } from "../typings";
 import ReactPlayer from "react-player/lazy";
@@ -12,6 +12,7 @@ import { FiThumbsUp, FiVolumeX, FiVolume1 } from "react-icons/fi";
 function Modal() {
   const [showModal, setShowModal] = useRecoilState(modalState);
   const [movie, setMovie] = useRecoilState(movieState);
+  const [myMovieList, setMovieList] = useRecoilState(movieList);
   const [trailer, setTrailer] = useState("");
   const [genres, setGenres] = useState<Genre[]>([]);
   const [muted, setMuted] = useState(true);
@@ -81,7 +82,14 @@ function Modal() {
                 )}
                 {isPlaying ? "Pause" : "Play"}
               </button>
-              <button className="modalButton">
+              <button
+                onClick={() => {
+                  if (movie) {
+                    setMovieList([...myMovieList, movie]);
+                  }
+                }}
+                className="modalButton"
+              >
                 <AiOutlinePlus className="h-7 w-7" />
               </button>
               <button className="modalButton">
@@ -104,9 +112,9 @@ function Modal() {
         <div className="flex space-x-16 rounded-b-md bg-[#181818] px-10 py-8">
           <div className="space-y-6 text-lg">
             <div className="flex items-center space-x-2 text-sm">
-              <p className="font-semibold text-green-400 ">
+              {movie?.vote_average && (<p className="font-semibold text-green-400 ">
                 {Math.floor(movie?.vote_average * 10)}% Match
-              </p>
+              </p>)}
               <p className="font-light">
                 {movie?.release_date || movie?.first_air_date}
               </p>

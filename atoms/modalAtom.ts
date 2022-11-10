@@ -8,7 +8,12 @@ export const modalState = atom({
     default:false,
 })
 
-export const movieState = atom<Movie | DocumentData | null>({
+export const movieState = atom<Movie | null>({
     key:'movieState',
     default:null,
+})
+
+export const movieList = atom<Movie[]>({
+    key:'movieList',
+    default:[]
 })

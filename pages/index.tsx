@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import {modalState} from '../atoms/modalAtom'
+import {modalState,movieList} from '../atoms/modalAtom'
 import {useRecoilValue} from 'recoil'
 import Banner from "../components/Banner";
 import Header from "../components/Header";
@@ -34,7 +34,7 @@ const Home = ({
 }: Props) => {
   const {loading} = useAuth();
   const showModal = useRecoilValue(modalState);
-
+  const list = useRecoilValue(movieList);
 
   if (loading) return (<>Loading...</>)
   return (
@@ -50,7 +50,7 @@ const Home = ({
           <Row title="Trending Now" movies={trendingNow} />
           <Row title="Top Rated" movies={topRated} />
           <Row title="Action Thrillers" movies={actionMovies} />
-          {/* {list.length > 0 && <Row title="My List" movies={list} />} */}
+          {list.length > 0 && <Row title="My List" movies={list} />}
 
           <Row title="Comedies" movies={comedyMovies} />
           <Row title="Scary Movies" movies={horrorMovies} />

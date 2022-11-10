@@ -55,7 +55,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   )
 
 
-
   const signUp = async (email: string, password: string) => {
     setLoading(true);
 
@@ -64,7 +63,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setUser(userCredential.user);
         router.push("/");
       })
-      .catch((error) => alert(error.message))
+      .catch((error) => setError(error.message))
       .finally(() => setLoading(false));
   };
 
@@ -76,7 +75,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setUser(userCredential.user);
         router.push("/");
       })
-      .catch((error) => alert(error.message))
+      .catch((error) => setError(error.message))
       .finally(() => setLoading(false));
   };
   const logOut = async () => {
@@ -84,7 +83,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     signOut(auth)
       .then(() => setUser(null))
-      .catch((error) => alert(error.message))
+      .catch((error) => setError(error.message))
       .finally(() => setLoading(false));
   };
   const memoedValue = useMemo(
